@@ -65,6 +65,66 @@ def decip(name,coords,size):
                         stri += chr(i)
     return(stri)
 
+def decip_2(name,coords,size):
+    im = Image.open(name)
+    rgb_im = im.convert('RGB')
+    rgb_im = rgb_im.crop((coords[0],coords[1],size+coords[0],size+coords[1]))
+    rgb_im.save('result2.png')
+    rgb_im = Image.open('result2.png')
+    color = rgb_im.getcolors()
+    x, y = rgb_im.size
+    stri = []
+    for q in range(x):
+        for w in range(y):
+            pix = rgb_im.getpixel((w, q))
+            if pix != (0,0,0):
+                for i in pix:
+                    if i != 0:
+                        stri.append(i)
+
+    def prove(stri):
+        for i in stri:
+            if i == 43:
+                return True
+            if i == 45:
+                return True
+            if i == 42:
+                return True
+            if i == 47:
+                return True
+        else:
+            return False
+    while prove(stri) == True:
+        for num,i in enumerate(stri):
+            try:
+                if stri[num] == 43:
+                    mas = [stri[num-1],stri[num+1]]
+                    stri.pop(num+1)
+                    stri[num] = mas[0] + mas[1]
+                    stri.pop(num-1)
+                    print(mas[0] + mas[1])
+                if stri[num] == 45:
+                    mas = [stri[num-1],stri[num+1]]
+                    stri.pop(num+1)
+                    stri[num] = mas[0] - mas[1]
+                    stri.pop(num-1)
+                    print(mas[0] - mas[1])
+                if stri[num] == 42:
+                    mas = [stri[num-1],stri[num+1]]
+                    stri.pop(num+1)
+                    stri[num] = mas[0] * mas[1]
+                    stri.pop(num-1)
+                    print(mas[0] * mas[1])
+                if stri[num] == 47:
+                    mas = [stri[num-1],stri[num+1]]
+                    stri.pop(num+1)
+                    stri[num] = mas[0] / mas[1]
+                    stri.pop(num-1)
+                    print(mas[0] / mas[1])
+            except IndexError:
+                pass
+    return(stri)
+
 def in_img(name1,name2,name3,coord):
     im1 = Image.open(name1)
     im2 = Image.open(name2)
@@ -74,7 +134,7 @@ def in_img(name1,name2,name3,coord):
     im1.close()
     im2.close()
 
-stri = input('Text:')
+stri = ''
 name = 'orig.png'
 a = 0
 while a*a*3 < len(stri):
@@ -85,4 +145,4 @@ y = int(input('Y:'))
 coords = [x,y]
 name_img = input('Name you img:')
 in_img(name_img,'result.png','img_result.png',coords)
-print(decip('img_result.png',coords,a))
+print(decip_2('result.png',coords,a))

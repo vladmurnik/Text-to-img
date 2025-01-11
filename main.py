@@ -48,50 +48,6 @@ def glcip(stri,name):
     else:
         cip(stri,'result.png')
 
-def glcip_col(stri,name):
-    def cip(stri, name):
-        list_2 = []
-        for i in stri:
-            list_2.append(bin(ord(i))[2:])
-        stro = ''
-        for i in list_2:
-            stro += i + '2'
-        while len(stro)%3 != 0:
-            stro += '0'
-        list = [stro[i:i + 3] for i in range(0, len(stro), 3)]
-        im = Image.new("RGB", (len(list), 1))
-        rgb_im = im.convert('RGB')
-        color = rgb_im.getcolors()
-        pixels = im.load()
-        x, y = im.size
-        for i in range(x):
-            for j in range(y):
-                a = int(list[i][0])
-                b = int(list[i][1])
-                c = int(list[i][2])
-                l = [a,b,c]
-                for num,i in enumerate(l):
-                    if i == 1:
-                        l[num] = 255
-                    elif i == 2:
-                        l[num] = 222
-                print(l)
-                pixels[i, j] = l[0],l[1],l[2]
-        im.save(name)
-    if len(stri) > a*3:
-        im = Image.new("RGBA", (a, a))
-        im.save('result.png')
-        stri = [stri[i:i + a*3] for i in range(0, len(stri), a*3)]
-        for num,i in enumerate(stri):
-            cip(i,str(num)+name)
-            im1 = Image.open(str(num)+name)
-            im2 = Image.open('result.png')
-            back_im = im2.copy()
-            back_im.paste(im1,(0,num))
-            back_im.save('result.png')
-            os.remove(str(num)+name)
-    else:
-        cip(stri,'result.png')
 def decip(name,coords,size):
     im = Image.open(name)
     rgb_im = im.convert('RGB')
@@ -179,7 +135,7 @@ def in_img(name1,name2,name3,coord):
     im1.close()
     im2.close()
 
-stri = ''
+stri = input('Text:')
 name = 'orig.png'
 a = 0
 while a*a*3 < len(stri):

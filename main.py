@@ -141,9 +141,14 @@ a = 0
 while a*a*3 < len(stri):
     a += 1
 glcip(stri,name)
-x = int(input('X:'))
-y = int(input('Y:'))
-coords = [x,y]
 name_img = input('Name you img:')
-in_img(name_img,'result.png','img_result.png',coords)
-print(decip_2('result.png',coords,a))
+in_img_y_or_n = input('Insert into photo?')
+if in_img_y_or_n == 'y':
+    x = int(input('X:'))
+    y = int(input('Y:'))
+    coords = [x,y]
+    in_img(name_img,'result.png','img_result.png',coords)
+    print(decip('result.png',coords,a))
+else:
+    coords = [0,0]
+    print(decip('result.png',coords,a))
